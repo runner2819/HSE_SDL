@@ -93,7 +93,7 @@ def pinger(conn_params: dict) -> None:
         conn_params.get("port"),
         conn_params.get("dbname"),
         os.environ.get("PG_USER"),
-        conn_params.get("connect_timeout"),
+        int(config.get("connect_timeout", DEFAULT_TIMEOUT)),
     )
 
     while True:

@@ -22,7 +22,7 @@ def version(conn_params: dict):
 
 if __name__ == "__main__":
     try:
-        with open('config.json') as file:
+        with open('../config.json') as file:
             config = json.load(file)
         config["user"] = input("Username: ")
         config["password"] = getpass.getpass("Password: ")

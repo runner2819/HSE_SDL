@@ -1,0 +1,10 @@
+CREATE USER pinger_user WITH
+    PASSWORD 'changeme'
+    NOSUPERUSER
+    NOCREATEDB
+    NOCREATEROLE
+    LOGIN;
+
+GRANT CONNECT ON DATABASE app TO pinger_user;
+
+GRANT USAGE ON SCHEMA public TO pinger_user;

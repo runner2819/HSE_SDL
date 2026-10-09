@@ -3,27 +3,15 @@ services:
     image: postges_ru
     build:
       context: ./postgres
-#      dockerfile: Dockerfile
     restart: always
     ports:
       - "5432:5432"
-#    healthcheck:
-#      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
-#      interval: 10s
-#      retries: 5
-#      start_period: 30s
-#      timeout: 10s
     volumes:
       - ./pgdata:/var/lib/postgresql
-
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     env_file:
-      - postgres/.env
-#    environment:
-      # POSTGRES_INITDB_ARGS: --locale-provider=icu --icu-locale=ru-RU
-#      POSTGRES_USER: $POSTGRES_USER
-#      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-#      POSTGRES_DB: $POSTGRES_DB
-#      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+      - ./postgres/.env
+
 
   pinger:
     image: pg_pinger
@@ -31,15 +19,7 @@ services:
       context: ./app
     restart: always
     env_file:
-      - app/.env
-#    environment:
-      #      DB_HOST: ${DB_HOST}
-      #      DB_PORT: ${DB_PORT}
-      #      DB_NAME: ${DB_NAME}
-      #      DB_USER: ${DB_USER}
-#      DB_PASSWORD: ${DB_PASSWORD}
-#      PING_INTERVAL: ${PING_INTERVAL}
-#      LOG_FILE: ${LOG_FILE}
+      - ./app/.env
     volumes:
       - ./pinger_logs:/app/logs
   adminer:
